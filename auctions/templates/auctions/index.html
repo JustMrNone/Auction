@@ -1,0 +1,52 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+{% if messages %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<h1 class="blockquote auction">Auctions</h1>
+<a class="Anlisting" href="{% url 'create_listing' %}">Create a New Listing</a>
+<h2 class="Alisting">Active Listings</h2>
+
+<div class="listings-container">
+  {% for list in listings %}
+  <div class="listing-item">
+    <div class="image-container">
+      {% if list.image_url %}
+      <a href="{% url 'listing_detail' list.id %}"><img class="image" src="{{ list.image_url }}" alt="{{ list.title }}"></a>
+      {% else %}
+      <a href="{% url 'listing_detail' list.id %}"><img class="image" src="{% static 'img/default.jpg' %}" alt="{{ list.title }}"></a>
+      {% endif %}
+    </div>
+    <div class="listing-details">
+      <h3><a href="{% url 'listing_detail' list.id %}" class="login">{{ list.title }}</a></h3>
+      <p>Category: <a href="{% url 'category_listings' list.category %}" class="login">{{ list.category }}</a></p>
+      <p>{{ list.description|truncatechars:200 }}</p>
+      
+      <p>
+        {% if list.price %}
+          <strong>Highest Bid:</strong> ${{ list.price }}<br>
+        {% else %}
+          <strong>Starting Bid:</strong> ${{ list.starting_bid }}<br>
+        {% endif %}
+      </p>
+      <form action="{% url 'add_to_watchlist' list.id %}" method="post">
+        {% csrf_token %}
+        
+        <button type="submit" class="btn btn-dark">Add to Watchlist</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}

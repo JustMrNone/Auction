@@ -1,0 +1,171 @@
+body {
+    padding: 5px;
+}
+.signin{
+    text-align: center;
+}
+.m2w{
+  margin-bottom: 20px;
+}
+.nav {
+    overflow: hidden;
+    background-color: #3b9668; /* Set background color */
+  }
+
+  .nav a {
+    float: left; /* Make links float left initially */
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .nav a:hover {
+    background-color: #49d38e; /* Add hover effect */
+    color: black;
+  }
+
+  .nav .active {
+    background-color: #04aa6d; /* Add active link styling */
+    color: white;
+  }
+
+  @media screen and (max-width: 600px) {
+    .nav a {
+      float: none; /* Make links stack vertically on small screens */
+      width: 100%; /* Full width for each link */
+    }
+  }
+
+
+.auction{
+    text-align: center;
+    font-weight: bold;
+}
+
+.tlisting{
+  text-align: center;
+}
+
+.center{
+  text-align: center; 
+  margin-top: 20px;
+}
+
+.input-group{
+  margin-left: 90px;
+}
+.Alisting{
+  margin-left: 110px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.listings-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  margin-left: 100px;
+  height: 500px;
+}
+
+.listing-item {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+image:hover{
+  opacity: 0.8;
+}
+
+.listing-details {
+  margin-top: 10px; 
+
+}
+.Anlisting{
+  margin-left: 120px;
+  color: #406d56;
+}
+.comments{
+  margin-left: 100px;
+}
+
+hr {
+  overflow: visible;
+  height: 30px;
+  border-style: solid;
+  border-color: #3b9668;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+hr:before { 
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: #3b9668;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+.btn-dark:hover{
+  background-color: #3b9668;
+  border-color: #3b9668;
+}
+
+.bidsp{
+  margin-left: 25px;
+  font-size: 16px;
+}
+
+.bidsA{
+  text-decoration: none !important;
+  color: #3b9668
+}
+
+.watchL{
+  text-align: center;
+}
+
+.listing-items{
+  margin-left: 100px;
+}
+
+.colorbids{
+  color: #3b9668;
+}
+
+.border-custom {
+  border-color: #3b9668; /* Change to your desired border color */
+}
+
+.basecolor{
+  color: #3b9668
+}
+.login{
+  text-decoration: none !important;
+  color: #991515
+}
+.input-group{
+  border-color: #3b9668;
+}

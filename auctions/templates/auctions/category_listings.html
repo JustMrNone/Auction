@@ -1,0 +1,52 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Listings</title>
+    <!-- Add your CSS links or stylesheets here -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<!-- Header section -->
+<header>
+    <h1 class="center"><span class="colorbids">{{ category }}</span> Category</h1>
+    <br>
+</header>
+
+<!-- Main content section -->
+<div class="listings-container">
+    {% for list in listings %}
+    <div class="listing-item">
+        <div class="image-container">
+            {% if list.image_url %}
+            <img class="image" src="{{ list.image_url.url }}" alt="{{ list.title }}">
+            {% else %}
+            <img class="image" src="{% static 'img/default.jpg' %}" alt="{{ list.title }}">
+            {% endif %}
+        </div>
+        <div class="listing-details">
+            <h3><a href="{% url 'listing_detail' list.id %}" class="login">{{ list.title }}</a></h3>
+            <p>Category: <a href="{% url 'category_listings' list.category %}">{{ list.category }}</a></p>
+            <p>{{ list.description|truncatechars:200 }}</p>
+            <form action="{% url 'add_to_watchlist' list.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-dark">Add to Watchlist</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Add your footer section here if needed -->
+
+<!-- Add your JavaScript files or code here if needed -->
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+<h1 class="watchL">Your Watch List</h1>
+<div class="listings-container">
+    {% for item in items %}
+      <div class="listing-item">
+        <div class="image-container">
+          {% if item.image_url %}
+          <a href="{% url 'listing_detail' item.pk %}"><img src="{{ item.image_url.url }}" alt="{{ item.title }}" class="image"></a>
+          {% else %}
+            <!-- Display a default image if image_url is not set -->
+          <a href="{% url 'listing_detail' item.pk %}"><img src="{% static 'img/default.jpg' %}" alt="Default Image" class="image"></a>
+          {% endif %}
+        </div>
+        <h3><a href="{% url 'listing_detail' item.pk %}" class="login">{{ item.title }}</a></h3>
+        <p>Category: <a href="{% url 'category_listings' item.category %}" class="login">{{ item.category }}</a></p>
+        <p>{{ item.description|truncatewords:30 }}</p>
+        
+        <!-- Add more details if needed -->
+        <form action="{% url 'remove_from_watchlist' item.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-dark">Remove from Watchlist</button>
+        </form>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}

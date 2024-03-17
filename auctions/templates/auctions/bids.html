@@ -1,0 +1,68 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4 center">Your <a href="{% url 'index'%}" class="bidsA">Auctions</a> and Bids</h1>
+
+    <!-- Display user's auctions -->
+    {% if auctions %}
+    <div class="mb-4">
+        <h2>Your Auctions</h2>
+        <ul class="list-group">
+            {% for auction in auctions %}
+            <li class="list-group-item border-custom">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% if auction.image_url %}
+                        <a href="{% url 'listing_detail' auction.id %}"><img src="{{ auction.image_url.url }}" alt="{{ auction.title }}" class="img-fluid"></a>
+                        {% else %}
+                        <a href="{% url 'listing_detail' auction.id %}"><img src="{% static 'img/default.jpg' %}" alt="Default Image" class="img-fluid"></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <h3><a href="{% url 'listing_detail' auction.id %}">{{ auction.title }}</a></h3>
+                        <p><strong>Category:</strong> <a href="{% url 'category_listings' auction.category %}">{{ auction.category }}</a></p>
+                        
+                        <p>{{ auction.description|truncatechars:200 }}</p>
+                        {% for bid in user_bids %}
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <p class="bidsp">No auctions created by you yet. Click <a href="{% url 'create_listing'%}" class="bidsA">here</a> to create.</p>
+    {% endif %}
+
+    <!-- Display user's bids -->
+    {% if user_bids %}
+    <div class="mb-4">
+        <h2>Your Bids</h2>
+        <ul class="list-group">
+            {% for bid in user_bids %}
+            <li class="list-group-item">
+                <p><strong>User:</strong> {{ bid.user.username }}</p>
+                <p><strong>Auction:</strong> {{ bid.auction.title }}</p>
+                <p><strong>Amount:</strong> {{ bid.amount }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <p class="bidsp">No bids placed by you yet.</p>
+    {% endif %}
+
+    <!-- Close Bids form -->
+    {% if auctions %}
+    <form action="{% url 'close_bids' auctions.0.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Close Bids</button>
+    </form>
+    {% endif %}
+</div>
+
+{% endblock %}
+

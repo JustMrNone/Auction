@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Auctions{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+
+  </head>
+  <body>
+    
+
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+        <a class="nav-link" href="{% url 'categories' %}?next={{ request.path }}">Search</a>
+        <a class="nav-link" href="{% url 'watchlist' %}?next={{ request.path }}">Watchlist</a>
+        
+
+
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+      {% endif %}
+    </ul>
+    <div>
+      {% block conditional_content %}
+      {% if user.is_authenticated %}
+          <p class="center">Signed in as <strong>{{ user.username }}</strong>.<br>
+          <a href="{% url 'bids' %}" class="btn btn-dark mt-2">View Bids</a></p> <!-- Add mt-2 class for margin top -->
+          {% else %}
+          <div class="signin center"> <!-- Add text-center class here -->
+              <p style="display: inline;">Not signed in. Click here to</p>
+              <a href="{% url 'login' %}" style="display: inline;" class="login">Login</a>
+          </div>
+          {% endif %}
+        {% endblock %}
+      </div>
+      <hr id="three" data-symbol="BREAK">
+
+    <!-- <p>Debug: Current path - {{ request.path }}</p> -->
+    {% block body %}
+    {% endblock %}
+  </body>
+</html>

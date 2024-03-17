@@ -1,0 +1,61 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    <h2 class="tlisting"> Search </h2><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mx-auto"> <!-- Adjust col size as needed -->
+                <form action="{% url 'filter' %}">
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="category" placeholder="Enter a category..." autofocus>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-dark btn-sm">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="title" placeholder="Enter a title....." autofocus>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-dark btn-sm">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if listings %}
+    <div class="listings-container">
+        {% for list in listings %}
+        <div class="listing-item">
+          <div class="image-container">
+            {% if list.image_url %}
+            <a href="{% url 'listing_detail' list.id %}"><img class="image" src="{{ list.image_url }}" alt="{{ list.title }}"></a>
+            {% else %}
+            <a href="{% url 'listing_detail' list.id %}"><img class="image" src="{% static 'img/default.jpg' %}" alt="{{ list.title }}"></a>
+            {% endif %}
+          </div>
+          <div class="listing-details">
+            <h3><a href="{% url 'listing_detail' list.id %}" class="login">{{ list.title }}</a></h3>
+            <p>Category: <a href="{% url 'category_listings' list.category %}" class="login">{{ list.category }}</a></p>
+            <p>{{ list.description|truncatechars:200 }}</p>
+            <form action="{% url 'add_to_watchlist' list.id %}" method="post">
+              {% csrf_token %}
+              
+              <button type="submit" class="btn btn-dark">Add to Watchlist</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        {% if category %}
+            <p>No listings found for the category: {{ category }}</p>
+        {% else %}
+            <p class="tlisting">No listings found.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
